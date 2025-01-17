@@ -74,8 +74,8 @@ class Game:
             'level1.tmx': ['ogre', 'skeleton'],
             'level2.tmx': ['zombie', 'muddy'],
             'level3.tmx': ['demon', 'hellboy'],
-            'level4.tmx': ['troll', 'tree'],
-            'level5.tmx': ['golem', 'chort']
+            'level4.tmx': ['swampy', 'tree'],
+            'level5.tmx': ['devil', 'chort']
         }
 
         self.setup_map(self.selected_map)
