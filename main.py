@@ -30,7 +30,7 @@ class Game:
         self.enemy_spawn_delay = 1000
         self.max_enemies = 10
         self.player_has_armor = False
-        self.selected_map = 'easy_level.tmx'
+        self.selected_map = 'level1.tmx'
         pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
         self.enemy_spawn_positions = []
         self.enemy_frames = {}
@@ -71,9 +71,11 @@ class Game:
         self.background_music.play(loops=-1)
 
         self.map_enemy_types = {
-            'easy_level.tmx': ['ogre', 'skeleton'],
-            'normal_level.tmx': ['zombie', 'muddy'],
-            'hard_level.tmx': ['demon', 'hellboy']
+            'level1.tmx': ['ogre', 'skeleton'],
+            'level2.tmx': ['zombie', 'muddy'],
+            'level3.tmx': ['demon', 'hellboy'],
+            'level4.tmx': ['troll', 'tree'],
+            'level5.tmx': ['golem', 'chort']
         }
 
         self.setup_map(self.selected_map)
@@ -378,15 +380,19 @@ class Game:
 
         choose_level = font_choose_level.render("Choose level:", True, pygame.Color('white'))
 
-        easy_button = Button(WINDOW_WIDTH // 2 - 260, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
+        level1_button = Button(WINDOW_WIDTH // 2 - 260, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
                              pygame.Color('green'), 'Level 1', 32)
-        normal_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
+        level2_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
                                pygame.Color('yellow'), 'Level 2', 32)
-        hard_button = Button(WINDOW_WIDTH // 2 + 110, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
+        level3_button = Button(WINDOW_WIDTH // 2 + 110, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
                              pygame.Color('red'), 'Level 3', 32)
+        level4_button = Button(WINDOW_WIDTH // 2 - 170, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('black'),
+                               pygame.Color('purple'), 'Level 4', 32)
+        level5_button = Button(WINDOW_WIDTH // 2 + 20, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('black'),
+                               pygame.Color('orange'), 'Level 5', 32)
 
-        start_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('white'),
-                              pygame.Color('blue'), 'Start', 32)
+        start_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
+                              pygame.Color('grey'), 'Start', 32)
 
 
         background_image = pygame.image.load(join('assets', 'menu', 'menu_background.png')).convert()
@@ -407,29 +413,45 @@ class Game:
             mouse_position = pygame.mouse.get_pos()
             mouse_pressed = pygame.mouse.get_pressed()
 
-            if easy_button.is_pressed(mouse_position, mouse_pressed):
+            if level1_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 10
                 self.enemy_spawn_delay = 1000
-                self.selected_map = 'easy_level.tmx'
+                self.selected_map = 'level1.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 1'
 
-            if normal_button.is_pressed(mouse_position, mouse_pressed):
+            if level2_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 20
                 self.enemy_spawn_delay = 500
-                self.selected_map = 'normal_level.tmx'
+                self.selected_map = 'level2.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 2'
 
-            if hard_button.is_pressed(mouse_position, mouse_pressed):
+            if level3_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 30
                 self.enemy_spawn_delay = 100
-                self.selected_map = 'hard_level.tmx'
+                self.selected_map = 'level3.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 3'
+
+            if level4_button.is_pressed(mouse_position, mouse_pressed):
+                self.max_enemies = 30
+                self.enemy_spawn_delay = 300
+                self.selected_map = 'level4.tmx'
+                pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
+                mode_selected = True
+                mode_text = 'You choose level 4'
+
+            if level5_button.is_pressed(mouse_position, mouse_pressed):
+                self.max_enemies = 30
+                self.enemy_spawn_delay = 300
+                self.selected_map = 'level5.tmx'
+                pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
+                mode_selected = True
+                mode_text = 'You choose level 5'
 
             if start_button.is_pressed(mouse_position, mouse_pressed) and mode_selected:
                 self.reset_game_state()
@@ -437,16 +459,18 @@ class Game:
                 start = False
 
             self.display_surface.blit(choose_level, (WINDOW_WIDTH // 2 - choose_level.get_width() // 2, 110))
-            self.display_surface.blit(easy_button.image, easy_button.rect)
-            self.display_surface.blit(normal_button.image, normal_button.rect)
-            self.display_surface.blit(hard_button.image, hard_button.rect)
+            self.display_surface.blit(level1_button.image, level1_button.rect)
+            self.display_surface.blit(level2_button.image, level2_button.rect)
+            self.display_surface.blit(level3_button.image, level3_button.rect)
+            self.display_surface.blit(level4_button.image, level4_button.rect)
+            self.display_surface.blit(level5_button.image, level5_button.rect)
             self.display_surface.blit(start_button.image, start_button.rect)
 
             if mode_selected:
                 font = pygame.font.Font(join('assets', 'fonts', 'game_font.ttf'), 20)
                 mode_message = font.render(mode_text, True, pygame.Color('white'))
                 self.display_surface.blit(mode_message,
-                                          (WINDOW_WIDTH // 2 - mode_message.get_width() // 2, WINDOW_HEIGHT // 2 - 80))
+                                          (WINDOW_WIDTH // 2 - mode_message.get_width() // 2, WINDOW_HEIGHT // 2 + 120))
 
             pygame.display.update()
 
@@ -466,7 +490,7 @@ class Game:
             coin_text = small_font.render(f"Coins: {self.coin_count}", True, pygame.Color('yellow'))
             crystal_text = small_font.render(f"Crystals: {self.crystal_count}", True, pygame.Color('purple'))
             menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
-                                 pygame.Color('blue'), 'Menu', 32)
+                                 pygame.Color('grey'), 'Menu', 32)
 
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH // 2 - game_over_text.get_width() // 2, 150))
             self.display_surface.blit(score_text, (WINDOW_WIDTH // 2 - score_text.get_width() // 2, 250))
@@ -527,7 +551,7 @@ class Game:
             coin_text = small_font.render(f"Coins: {self.coin_count}", True, pygame.Color('yellow'))
             crystal_text = small_font.render(f"Crystals: {self.crystal_count}", True, pygame.Color('purple'))
             menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
-                                 pygame.Color('blue'), 'Menu', 32)
+                                 pygame.Color('grey'), 'Menu', 32)
 
             self.display_surface.blit(winner_text, (WINDOW_WIDTH // 2 - winner_text.get_width() // 2, 150))
             self.display_surface.blit(score_text, (WINDOW_WIDTH // 2 - score_text.get_width() // 2, 250))
