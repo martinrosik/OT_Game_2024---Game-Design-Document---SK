@@ -85,7 +85,7 @@ class Game:
         self.game_result = None
 
         self.start_time = pygame.time.get_ticks()
-        self.timer_duration = 30 * 1000 * 6
+        self.timer_duration = 50 * 1000 * 6
 
         self.max_hearts = 5
         self.current_hearts = self.max_hearts
@@ -107,19 +107,19 @@ class Game:
         self.healing_sprites = pygame.sprite.Group()
         self.heart_surface = pygame.image.load(join('assets', 'icons', 'heart_full.png')).convert_alpha()
         self.healing_event = pygame.event.custom_type()
-        self.healing_spawn_delay = 20000
+        self.healing_spawn_delay = 15000
         pygame.time.set_timer(self.healing_event, self.healing_spawn_delay)
 
         self.armor_sprites = pygame.sprite.Group()
         self.armor_surface = pygame.image.load(join('assets', 'icons', 'armor.png')).convert_alpha()
         self.armor_event = pygame.event.custom_type()
-        self.armor_spawn_delay = 40000
+        self.armor_spawn_delay = 30000
         pygame.time.set_timer(self.armor_event, self.armor_spawn_delay)
 
         self.coin_sprites = pygame.sprite.Group()
         self.coin_surface = pygame.image.load(join('assets', 'icons', 'coin.png')).convert_alpha()
         self.coin_event = pygame.event.custom_type()
-        self.coin_spawn_delay = 7000
+        self.coin_spawn_delay = 5000
         pygame.time.set_timer(self.coin_event, self.coin_spawn_delay)
 
         self.coin_count = 0
@@ -127,19 +127,19 @@ class Game:
         self.crystal_sprites = pygame.sprite.Group()
         self.crystal_surface = pygame.image.load(join('assets', 'icons', 'crystal.png')).convert_alpha()
         self.crystal_event = pygame.event.custom_type()
-        self.crystal_spawn_delay = 25000
+        self.crystal_spawn_delay = 20000
         pygame.time.set_timer(self.crystal_event, self.crystal_spawn_delay)
         self.crystal_count = 0
 
         self.book_sprites = pygame.sprite.Group()
         self.book_surface = pygame.image.load(join('assets', 'icons', 'book.png')).convert_alpha()
         self.book_spawned = False
-        self.book_spawn_time = random.randint(30 * 1000, 120 * 1000)
+        self.book_spawn_time = random.randint(60 * 1000, 240 * 1000)
 
         self.boots_sprites = pygame.sprite.Group()
         self.boots_surface = pygame.image.load(join('assets', 'icons', 'boots.png')).convert_alpha()
         self.boots_spawned = False
-        self.boots_spawn_time = random.randint(30 * 1000, 120 * 1000)
+        self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
 
         self.dark_mode = DarkMode()
         self.dark_mode_event = pygame.event.custom_type()
@@ -324,7 +324,7 @@ class Game:
         books_collected = pygame.sprite.spritecollide(self.player, self.book_sprites, True, pygame.sprite.collide_mask)
         for book in books_collected:
             self.item_pickup.play()
-            new_timer = random.randint(1 * 60 * 1000, 6 * 60 * 1000)
+            new_timer = random.randint(1 * 60 * 1000, 10 * 60 * 1000)
             self.timer_duration = new_timer
             self.start_time = pygame.time.get_ticks()
 
@@ -332,7 +332,7 @@ class Game:
         boots_collected = pygame.sprite.spritecollide(self.player, self.boots_sprites, True, pygame.sprite.collide_mask)
         for boot in boots_collected:
             self.item_pickup.play()
-            self.player.speed = 170
+            self.player.speed = 200
 
     def draw_hearts(self):
         for i in range(self.current_hearts):
@@ -539,9 +539,9 @@ class Game:
         self.setup_map(self.selected_map)
         self.book_spawned = False
         self.boots_spawned = False
-        self.book_spawn_time = random.randint(30 * 1000, 120 * 1000)
-        self.boots_spawn_time = random.randint(30 * 1000, 120 * 1000)
-        self.timer_duration = 30 * 1000 * 6
+        self.book_spawn_time = random.randint(60 * 1000, 240 * 1000)
+        self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
+        self.timer_duration = 50 * 1000 * 6
 
     def winner_screen(self):
         winner = True
