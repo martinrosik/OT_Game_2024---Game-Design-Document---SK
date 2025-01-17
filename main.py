@@ -111,7 +111,7 @@ class Game:
         self.armor_sprites = pygame.sprite.Group()
         self.armor_surface = pygame.image.load(join('assets', 'icons', 'armor.png')).convert_alpha()
         self.armor_event = pygame.event.custom_type()
-        self.armor_spawn_delay = 1000
+        self.armor_spawn_delay = 45000
         pygame.time.set_timer(self.armor_event, self.armor_spawn_delay)
 
         self.coin_sprites = pygame.sprite.Group()
