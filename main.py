@@ -107,19 +107,19 @@ class Game:
         self.healing_sprites = pygame.sprite.Group()
         self.heart_surface = pygame.image.load(join('assets', 'icons', 'heart_full.png')).convert_alpha()
         self.healing_event = pygame.event.custom_type()
-        self.healing_spawn_delay = 25000
+        self.healing_spawn_delay = 20000
         pygame.time.set_timer(self.healing_event, self.healing_spawn_delay)
 
         self.armor_sprites = pygame.sprite.Group()
         self.armor_surface = pygame.image.load(join('assets', 'icons', 'armor.png')).convert_alpha()
         self.armor_event = pygame.event.custom_type()
-        self.armor_spawn_delay = 45000
+        self.armor_spawn_delay = 40000
         pygame.time.set_timer(self.armor_event, self.armor_spawn_delay)
 
         self.coin_sprites = pygame.sprite.Group()
         self.coin_surface = pygame.image.load(join('assets', 'icons', 'coin.png')).convert_alpha()
         self.coin_event = pygame.event.custom_type()
-        self.coin_spawn_delay = 10000
+        self.coin_spawn_delay = 7000
         pygame.time.set_timer(self.coin_event, self.coin_spawn_delay)
 
         self.coin_count = 0
@@ -127,7 +127,7 @@ class Game:
         self.crystal_sprites = pygame.sprite.Group()
         self.crystal_surface = pygame.image.load(join('assets', 'icons', 'crystal.png')).convert_alpha()
         self.crystal_event = pygame.event.custom_type()
-        self.crystal_spawn_delay = 30000
+        self.crystal_spawn_delay = 25000
         pygame.time.set_timer(self.crystal_event, self.crystal_spawn_delay)
         self.crystal_count = 0
 
@@ -528,6 +528,12 @@ class Game:
         self.snowball_sprites.empty()
         self.healing_sprites.empty()
         self.armor_images = []
+        self.coin_spawn_positions = []
+        self.health_spawn_positions = []
+        self.armor_spawn_positions = []
+        self.boots_spawn_position = []
+        self.crystal_spawn_positions = []
+        self.book_spawn_positions = []
         self.coin_sprites.empty()
         self.crystal_sprites.empty()
         self.setup_map(self.selected_map)
@@ -606,7 +612,7 @@ class Game:
 
                 if event.type == self.dark_mode_event:
                     self.dark_mode.toggle(current_time)
-                    pygame.time.set_timer(self.dark_mode_event, random.randint(30000, 60000))
+                    pygame.time.set_timer(self.dark_mode_event, random.randint(10000, 160000))
 
             self.input()
             self.snowball_collision()
