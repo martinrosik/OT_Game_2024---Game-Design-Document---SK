@@ -13,6 +13,7 @@ from assets.items.crystal import Crystal
 from assets.items.boots import Boots
 from assets.items.book import Book
 from assets.items.armor import Armor
+from assets.items.torch import Torch
 import random
 
 
@@ -41,6 +42,7 @@ class Game:
         self.boots_spawn_position = []
         self.crystal_spawn_positions = []
         self.book_spawn_positions = []
+        self.torch_spawn_positions = []
 
         self.can_shoot = True
         self.shoot_time = 0
@@ -66,6 +68,8 @@ class Game:
         self.item_pickup.set_volume(0.2)
         self.armor_pickup = pygame.mixer.Sound(join('assets', 'audio', 'armor_pickup.mp3'))
         self.armor_pickup.set_volume(0.2)
+        self.torch_pickup = pygame.mixer.Sound(join('assets', 'audio', 'torch_pickup.mp3'))
+        self.torch_pickup.set_volume(0.2)
         self.background_music = pygame.mixer.Sound(join('assets', 'audio', 'background_music.wav'))
         self.background_music.set_volume(0.01)
         self.background_music.play(loops=-1)
@@ -141,6 +145,11 @@ class Game:
         self.boots_spawned = False
         self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
 
+        self.torch_sprites = pygame.sprite.Group()
+        self.torch_surface = pygame.image.load(join('assets', 'icons', 'torch.png')).convert_alpha()
+        self.torch_spawned = False
+        self.torch_spawn_time = random.randint(60 * 1000, 240 * 1000)
+
         self.dark_mode = DarkMode()
         self.dark_mode_event = pygame.event.custom_type()
         self.dark_mode_delay = random.randint(15000, 30000)
@@ -178,6 +187,8 @@ class Game:
                 self.boots_spawn_position.append((item.x, item.y))
             if item.name == 'Armor':
                 self.armor_spawn_positions.append((item.x, item.y))
+            if item.name == 'Torch':
+                self.torch_spawn_positions.append((item.x, item.y))
 
     def load_enemies(self):
         folders = list(walk(join('assets', 'monsters')))[0][1]
@@ -241,6 +252,12 @@ class Game:
             self.item_spawn.play()
             self.boots_spawned = True
 
+    def spawn_torch(self):
+        if not self.torch_spawned and self.torch_spawn_positions:
+            position = choice(self.torch_spawn_positions)
+            Torch(self.torch_surface, position, (self.all_sprites, self.torch_sprites))
+            self.item_spawn.play()
+            self.torch_spawned = True
 
     def input(self):
         if pygame.mouse.get_pressed()[0] and self.can_shoot:
@@ -333,6 +350,13 @@ class Game:
         for boot in boots_collected:
             self.item_pickup.play()
             self.player.speed = 200
+
+    def player_pickup_torch(self):
+        torches_collected = pygame.sprite.spritecollide(self.player, self.torch_sprites, True,
+                                                        pygame.sprite.collide_mask)
+        for torch in torches_collected:
+            self.torch_pickup.play()
+            self.dark_mode.torch_active = True
 
     def draw_hearts(self):
         for i in range(self.current_hearts):
@@ -534,6 +558,7 @@ class Game:
         self.boots_spawn_position = []
         self.crystal_spawn_positions = []
         self.book_spawn_positions = []
+        self.torch_spawn_positions = []
         self.coin_sprites.empty()
         self.crystal_sprites.empty()
         self.setup_map(self.selected_map)
@@ -541,7 +566,10 @@ class Game:
         self.boots_spawned = False
         self.book_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
+        self.torch_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.timer_duration = 50 * 1000 * 6
+        self.torch_spawned = False
+        self.dark_mode.torch_active = False
 
     def winner_screen(self):
         winner = True
@@ -609,6 +637,9 @@ class Game:
 
                 if not self.boots_spawned and elapsed_time >= self.boots_spawn_time:
                     self.spawn_boots()
+
+                if not self.torch_spawned and elapsed_time >= self.boots_spawn_time:
+                    self.spawn_torch()
 
                 if event.type == self.dark_mode_event:
                     self.dark_mode.toggle(current_time)
