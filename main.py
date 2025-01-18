@@ -32,6 +32,7 @@ class Game:
         self.max_enemies = 10
         self.player_has_armor = False
         self.selected_map = 'level1.tmx'
+        self.map_color = ''
         pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
         self.enemy_spawn_positions = []
         self.enemy_frames = {}
@@ -445,6 +446,7 @@ class Game:
                 self.selected_map = 'level1.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
+                self.map_color = 'skyblue4'
                 mode_text = 'You choose level 1'
 
             if level2_button.is_pressed(mouse_position, mouse_pressed):
@@ -453,6 +455,7 @@ class Game:
                 self.selected_map = 'level2.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
+                self.map_color = 'lemonchiffon4'
                 mode_text = 'You choose level 2'
 
             if level3_button.is_pressed(mouse_position, mouse_pressed):
@@ -461,6 +464,7 @@ class Game:
                 self.selected_map = 'level3.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
+                self.map_color = 'indianred4'
                 mode_text = 'You choose level 3'
 
             if level4_button.is_pressed(mouse_position, mouse_pressed):
@@ -469,6 +473,7 @@ class Game:
                 self.selected_map = 'level4.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
+                self.map_color = 'aquamarine4'
                 mode_text = 'You choose level 4'
 
             if level5_button.is_pressed(mouse_position, mouse_pressed):
@@ -477,6 +482,7 @@ class Game:
                 self.selected_map = 'level5.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
+                self.map_color = 'goldenrod'
                 mode_text = 'You choose level 5'
 
             if start_button.is_pressed(mouse_position, mouse_pressed) and mode_selected:
@@ -660,7 +666,7 @@ class Game:
             self.shooter_timer()
             self.dark_mode.update(current_time)
 
-            self.display_surface.fill(('lightskyblue4'))
+            self.display_surface.fill(self.map_color)
             self.all_sprites.draw(self.player.rect.center)
             self.all_sprites.update(delta)
 
