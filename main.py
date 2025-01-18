@@ -14,6 +14,7 @@ from assets.items.boots import Boots
 from assets.items.book import Book
 from assets.items.armor import Armor
 from assets.items.torch import Torch
+from achievements import AchievementSystem
 import random
 
 
@@ -23,6 +24,7 @@ class Game:
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("Tears of the Lizard King")
         self.all_sprites = AllSprites()
+        self.achievement_system = AchievementSystem(self)
         self.enemy_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
         self.snowball_sprites = pygame.sprite.Group()
@@ -408,11 +410,11 @@ class Game:
         choose_level = font_choose_level.render("Choose level:", True, pygame.Color('white'))
 
         level1_button = Button(WINDOW_WIDTH // 2 - 260, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
-                             pygame.Color('darkblue'), 'Level 1', 32)
+                               pygame.Color('darkblue'), 'Level 1', 32)
         level2_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
                                pygame.Color('burlywood4'), 'Level 2', 32)
         level3_button = Button(WINDOW_WIDTH // 2 + 110, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
-                             pygame.Color('red'), 'Level 3', 32)
+                               pygame.Color('red'), 'Level 3', 32)
         level4_button = Button(WINDOW_WIDTH // 2 - 170, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('white'),
                                pygame.Color('aquamarine4'), 'Level 4', 32)
         level5_button = Button(WINDOW_WIDTH // 2 + 20, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('white'),
@@ -421,6 +423,8 @@ class Game:
         start_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('black'),
                               pygame.Color('green'), 'Start', 32)
 
+        achievements_button = Button(WINDOW_WIDTH // 2 - 125, WINDOW_HEIGHT // 2 + 120, 250, 50, pygame.Color('black'),
+                                     pygame.Color('gold'), 'Achievements', 32)
 
         background_image = pygame.image.load(join('assets', 'menu', 'menu_background.png')).convert()
 
@@ -447,7 +451,7 @@ class Game:
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 self.map_color = 'skyblue4'
-                mode_text = 'You choose level 1'
+                mode_text = 'You chose level 1'
 
             if level2_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 25
@@ -456,7 +460,7 @@ class Game:
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 self.map_color = 'lemonchiffon4'
-                mode_text = 'You choose level 2'
+                mode_text = 'You chose level 2'
 
             if level3_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 35
@@ -465,7 +469,7 @@ class Game:
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 self.map_color = 'indianred4'
-                mode_text = 'You choose level 3'
+                mode_text = 'You chose level 3'
 
             if level4_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 50
@@ -474,7 +478,7 @@ class Game:
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 self.map_color = 'aquamarine4'
-                mode_text = 'You choose level 4'
+                mode_text = 'You chose level 4'
 
             if level5_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 60
@@ -483,12 +487,15 @@ class Game:
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 self.map_color = 'goldenrod'
-                mode_text = 'You choose level 5'
+                mode_text = 'You chose level 5'
 
             if start_button.is_pressed(mouse_position, mouse_pressed) and mode_selected:
                 self.reset_game_state()
                 self.setup_map(self.selected_map)
                 start = False
+
+            if achievements_button.is_pressed(mouse_position, mouse_pressed):
+                self.achievement_system.show_achievements_menu(self.display_surface, self.clock)
 
             self.display_surface.blit(choose_level, (WINDOW_WIDTH // 2 - choose_level.get_width() // 2, 110))
             self.display_surface.blit(level1_button.image, level1_button.rect)
@@ -497,12 +504,13 @@ class Game:
             self.display_surface.blit(level4_button.image, level4_button.rect)
             self.display_surface.blit(level5_button.image, level5_button.rect)
             self.display_surface.blit(start_button.image, start_button.rect)
+            self.display_surface.blit(achievements_button.image, achievements_button.rect)
 
             if mode_selected:
                 font = pygame.font.Font(join('assets', 'fonts', 'game_font.ttf'), 20)
                 mode_message = font.render(mode_text, True, pygame.Color('white'))
                 self.display_surface.blit(mode_message,
-                                          (WINDOW_WIDTH // 2 - mode_message.get_width() // 2, WINDOW_HEIGHT // 2 + 120))
+                                          (WINDOW_WIDTH // 2 - mode_message.get_width() // 2, WINDOW_HEIGHT // 2 - 200))
 
             pygame.display.update()
 
@@ -664,6 +672,7 @@ class Game:
             self.player_pickup_boots()
             self.player_pickup_torch()
             self.shooter_timer()
+            self.achievement_system.check_achievements()
             self.dark_mode.update(current_time)
 
             self.display_surface.fill(self.map_color)
@@ -678,6 +687,7 @@ class Game:
             self.draw_crystal_count()
             self.draw_kill_count()
             self.draw_timer()
+            self.achievement_system.draw_notification(self.display_surface)
             pygame.display.update()
 
         if self.game_result == "win":
