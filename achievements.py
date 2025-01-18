@@ -45,8 +45,8 @@ class AchievementSystem:
             lambda game: game.book_picked_up
         )
         self.add_achievement(
-            "Survivor", "Survive for 10 minutes.", join('assets', 'achievements', 'survivor.png'),
-            lambda game: pygame.time.get_ticks() - game.start_time >= 10 * 60 * 1000
+            "Survivor", "Survive for 7 minutes.", join('assets', 'achievements', 'survivor.png'),
+            lambda game: pygame.time.get_ticks() - game.start_time >= 7 * 60 * 1000
         )
         self.add_achievement(
             "Killer", "Defeat 250 enemies.", join('assets', 'achievements', 'killer.png'),
