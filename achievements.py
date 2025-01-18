@@ -30,19 +30,19 @@ class AchievementSystem:
         )
         self.add_achievement(
             "Armor Up", "Collect your first piece of armor.", join('assets', 'achievements', 'armor_up.png'),
-            lambda game: game.player_pickup_armor()
+            lambda game: game.armor_picked_up
         )
         self.add_achievement(
             "Speedster", "Pick up the boots.", join('assets', 'achievements', 'speedster.png'),
-            lambda game: game.player_pickup_boots()
+            lambda game: game.boots_picked_up
         )
         self.add_achievement(
             "Torchbearer", "Pick up the torch.", join('assets', 'achievements', 'torchbearer.png'),
-            lambda game: game.player_pickup_torch()
+            lambda game: game.torch_picked_up
         )
         self.add_achievement(
             "Bookworm", "Collect the magic book.", join('assets', 'achievements', 'bookworm.png'),
-            lambda game: game.player_pickup_book()
+            lambda game: game.book_picked_up
         )
         self.add_achievement(
             "Survivor", "Survive for 10 minutes.", join('assets', 'achievements', 'survivor.png'),

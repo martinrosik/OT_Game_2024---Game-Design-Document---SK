@@ -47,6 +47,11 @@ class Game:
         self.book_spawn_positions = []
         self.torch_spawn_positions = []
 
+        self.armor_picked_up = False
+        self.boots_picked_up = False
+        self.book_picked_up = False
+        self.torch_picked_up = False
+
         self.can_shoot = True
         self.shoot_time = 0
         self.shoot_cooldown = 500
@@ -329,6 +334,7 @@ class Game:
                 self.current_armor += 1
                 self.armor_images.append(pygame.image.load(join('assets', 'icons', 'armor.png')).convert_alpha())
                 self.player_has_armor = True
+                self.armor_picked_up = True
 
     def player_pickup_coin(self):
         coins_collected = pygame.sprite.spritecollide(self.player, self.coin_sprites, True, pygame.sprite.collide_mask)
@@ -349,12 +355,14 @@ class Game:
             new_timer = random.randint(2 * 60 * 1000, 4 * 60 * 1000)
             self.timer_duration = new_timer
             self.start_time = pygame.time.get_ticks()
+            self.book_picked_up = True
 
     def player_pickup_boots(self):
         boots_collected = pygame.sprite.spritecollide(self.player, self.boots_sprites, True, pygame.sprite.collide_mask)
         for boot in boots_collected:
             self.item_pickup.play()
             self.player.speed = 200
+            self.boots_picked_up = True
 
     def player_pickup_torch(self):
         torches_collected = pygame.sprite.spritecollide(self.player, self.torch_sprites, True,
@@ -362,6 +370,7 @@ class Game:
         for torch in torches_collected:
             self.torch_pickup.play()
             self.dark_mode.torch_active = True
+            self.torch_picked_up = True
 
     def draw_hearts(self):
         for i in range(self.current_hearts):
@@ -587,6 +596,10 @@ class Game:
         self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.torch_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.timer_duration = 50 * 1000 * 6
+        self.armor_picked_up = False
+        self.boots_picked_up = False
+        self.book_picked_up = False
+        self.torch_picked_up = False
 
     def winner_screen(self):
         winner = True
@@ -682,7 +695,7 @@ class Game:
 
             self.dark_mode.render(self.display_surface)
             self.achievement_system.draw_notification(self.display_surface)
-            
+
             self.draw_hearts()
             self.draw_armor()
             self.draw_coin_count()
