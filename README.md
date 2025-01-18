@@ -15,7 +15,7 @@ This project draws inspiration from **The Binding of Isaac**, a rogue-like actio
 <p align="center">
   <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/TheBindingofIsaac.jpg" alt="The Binding of Isaac Gameplay">
   <br>
-  <em>Figure: The Binding of Isaac gameplay preview</em>
+  <em>Figure 1: The Binding of Isaac gameplay preview</em>
 </p>
 
 ---
@@ -50,22 +50,32 @@ This project serves as a functional prototype for the **Object Technologies** co
 
 ### **5.1 Hero Sprite** 🦸‍♂️🦎
 
-The player-controlled hero is designed as a brave lizard king, ready to fight off endless waves of enemies. 🐉
+The player-controlled hero is designed as a brave lizard, ready to fight off endless waves of enemies. 🐉
 
 <p align="center">
-  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/enemies.png" alt="Player sprite">
+  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/player.png" alt="Player sprite">
   <br>
-  <em>Figure: Player sprite</em>
+  <em>Figure 2: Player sprite</em>
 </p>
 
 ### **5.2 Enemy Sprites** 👾⚔️
 
-Enemies include knights and slimes, offering a variety of challenges to the player. Each enemy is visually distinct and designed with a medieval theme. 🏰
+Enemies include demon, sceleton & more, offering a variety of challenges to the player. Each enemy is visually distinct and designed with a medieval theme. 🏰
 
 <p align="center">
-  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/enemies.png" alt="Enemy Sprites">
+  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/various_enemies.png" alt="Enemy Sprites">
   <br>
-  <em>Figure: Enemy sprites</em>
+  <em>Figure 3: Enemy sprites</em>
+</p>
+
+### **5.3 Items Sprites** ⛏️✂️
+
+Items including armor, coin, offering a variety of gameplay & player actions. Each item is visually designed with a medieval theme. 
+
+<p align="center">
+  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/items.png" alt="Items Sprites">
+  <br>
+  <em>Figure 4: Items sprites</em>
 </p>
 
 ### **5.3 Map Design** 🏰🗺️
@@ -75,7 +85,7 @@ The game’s levels utilize the **DungeonTileset** from Itch.io, featuring a med
 <p align="center">
   <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/levels.png" alt="Map Design">
   <br>
-  <em>Figure: Map design</em>
+  <em>Figure 5: Map design</em>
 </p>
 
 #### **Assets Used** 📜
@@ -115,7 +125,7 @@ The goal is to survive for 5 minutes while battling enemies, avoiding obstacles,
 ### **7.3 Gameplay Screenshot** 📸
 
 <p align="center">
-  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/gameplay.png" alt="Gameplay Screenshot">
+  <img src="https://github.com/martinrosik/TearsOfTheLizardKing/blob/master/gameplay_screenshot.png" alt="Gameplay Screenshot">
   <br>
-  <em>Figure: Gameplay preview</em>
+  <em>Figure 6: Gameplay preview</em>
 </p>
