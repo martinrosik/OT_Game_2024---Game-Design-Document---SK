@@ -54,6 +54,8 @@ class Game:
         self.impact_sound.set_volume(0.3)
         self.being_hit = pygame.mixer.Sound(join('assets', 'audio', 'being_hit.mp3'))
         self.being_hit.set_volume(0.2)
+        self.armor_hit = pygame.mixer.Sound(join('assets', 'audio', 'armor_hit.mp3'))
+        self.armor_hit.set_volume(0.2)
         self.healing_sound = pygame.mixer.Sound(join('assets', 'audio', 'heal.mp3'))
         self.healing_sound.set_volume(0.3)
         self.coin_pickup = pygame.mixer.Sound(join('assets', 'audio', 'coin_pickup.mp3'))
@@ -300,7 +302,7 @@ class Game:
             if self.current_armor > 0:
                 self.current_armor -= 1
                 self.armor_images.pop()
-                self.being_hit.play()
+                self.armor_hit.play()
             elif self.current_hearts > 0:
                 self.current_hearts -= 1
                 self.being_hit.play()
@@ -341,7 +343,7 @@ class Game:
         books_collected = pygame.sprite.spritecollide(self.player, self.book_sprites, True, pygame.sprite.collide_mask)
         for book in books_collected:
             self.item_pickup.play()
-            new_timer = random.randint(1 * 60 * 1000, 10 * 60 * 1000)
+            new_timer = random.randint(2 * 60 * 1000, 4 * 60 * 1000)
             self.timer_duration = new_timer
             self.start_time = pygame.time.get_ticks()
 
@@ -438,24 +440,24 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if level1_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 25
-                self.enemy_spawn_delay = 550
+                self.max_enemies = 15
+                self.enemy_spawn_delay = 350
                 self.selected_map = 'level1.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 1'
 
             if level2_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 30
-                self.enemy_spawn_delay = 350
+                self.max_enemies = 25
+                self.enemy_spawn_delay = 300
                 self.selected_map = 'level2.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 2'
 
             if level3_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 40
-                self.enemy_spawn_delay = 250
+                self.max_enemies = 35
+                self.enemy_spawn_delay = 200
                 self.selected_map = 'level3.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
@@ -463,7 +465,7 @@ class Game:
 
             if level4_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 50
-                self.enemy_spawn_delay = 125
+                self.enemy_spawn_delay = 150
                 self.selected_map = 'level4.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
@@ -551,6 +553,8 @@ class Game:
         self.collision_sprites.empty()
         self.snowball_sprites.empty()
         self.healing_sprites.empty()
+        self.coin_sprites.empty()
+        self.crystal_sprites.empty()
         self.armor_images = []
         self.coin_spawn_positions = []
         self.health_spawn_positions = []
@@ -559,17 +563,15 @@ class Game:
         self.crystal_spawn_positions = []
         self.book_spawn_positions = []
         self.torch_spawn_positions = []
-        self.coin_sprites.empty()
-        self.crystal_sprites.empty()
         self.setup_map(self.selected_map)
         self.book_spawned = False
         self.boots_spawned = False
+        self.torch_spawned = False
+        self.dark_mode.torch_active = False
         self.book_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.boots_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.torch_spawn_time = random.randint(60 * 1000, 240 * 1000)
         self.timer_duration = 50 * 1000 * 6
-        self.torch_spawned = False
-        self.dark_mode.torch_active = False
 
     def winner_screen(self):
         winner = True
@@ -654,6 +656,7 @@ class Game:
             self.player_pickup_crystal()
             self.player_pickup_book()
             self.player_pickup_boots()
+            self.player_pickup_torch()
             self.shooter_timer()
             self.dark_mode.update(current_time)
 

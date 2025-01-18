@@ -6,7 +6,7 @@ class Armor(pygame.sprite.Sprite):
         self.image = surface
         self.rect = self.image.get_rect(topleft=position)
         self.spawn_time = pygame.time.get_ticks()
-        self.lifetime = 60000
+        self.lifetime = 25000
 
     def update(self, delta):
         if pygame.time.get_ticks() - self.spawn_time >= self.lifetime:
