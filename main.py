@@ -143,7 +143,7 @@ class Game:
 
         self.dark_mode = DarkMode()
         self.dark_mode_event = pygame.event.custom_type()
-        self.dark_mode_delay = random.randint(5000, 10000)
+        self.dark_mode_delay = random.randint(15000, 30000)
         pygame.time.set_timer(self.dark_mode_event, self.dark_mode_delay)
 
     def setup_map(self, map_file):
@@ -380,19 +380,19 @@ class Game:
 
         choose_level = font_choose_level.render("Choose level:", True, pygame.Color('white'))
 
-        level1_button = Button(WINDOW_WIDTH // 2 - 260, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
-                             pygame.Color('green'), 'Level 1', 32)
-        level2_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
-                               pygame.Color('yellow'), 'Level 2', 32)
-        level3_button = Button(WINDOW_WIDTH // 2 + 110, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('black'),
+        level1_button = Button(WINDOW_WIDTH // 2 - 260, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
+                             pygame.Color('darkblue'), 'Level 1', 32)
+        level2_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
+                               pygame.Color('burlywood4'), 'Level 2', 32)
+        level3_button = Button(WINDOW_WIDTH // 2 + 110, WINDOW_HEIGHT // 2 - 150, 150, 50, pygame.Color('white'),
                              pygame.Color('red'), 'Level 3', 32)
-        level4_button = Button(WINDOW_WIDTH // 2 - 170, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('black'),
-                               pygame.Color('purple'), 'Level 4', 32)
-        level5_button = Button(WINDOW_WIDTH // 2 + 20, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('black'),
+        level4_button = Button(WINDOW_WIDTH // 2 - 170, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('white'),
+                               pygame.Color('aquamarine4'), 'Level 4', 32)
+        level5_button = Button(WINDOW_WIDTH // 2 + 20, WINDOW_HEIGHT // 2 - 50, 150, 50, pygame.Color('white'),
                                pygame.Color('orange'), 'Level 5', 32)
 
-        start_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
-                              pygame.Color('grey'), 'Start', 32)
+        start_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('black'),
+                              pygame.Color('green'), 'Start', 32)
 
 
         background_image = pygame.image.load(join('assets', 'menu', 'menu_background.png')).convert()
@@ -414,40 +414,40 @@ class Game:
             mouse_pressed = pygame.mouse.get_pressed()
 
             if level1_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 10
-                self.enemy_spawn_delay = 1000
+                self.max_enemies = 25
+                self.enemy_spawn_delay = 550
                 self.selected_map = 'level1.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 1'
 
             if level2_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 20
-                self.enemy_spawn_delay = 500
+                self.max_enemies = 30
+                self.enemy_spawn_delay = 350
                 self.selected_map = 'level2.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 2'
 
             if level3_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 30
-                self.enemy_spawn_delay = 100
+                self.max_enemies = 40
+                self.enemy_spawn_delay = 250
                 self.selected_map = 'level3.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 3'
 
             if level4_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 30
-                self.enemy_spawn_delay = 300
+                self.max_enemies = 50
+                self.enemy_spawn_delay = 125
                 self.selected_map = 'level4.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
                 mode_text = 'You choose level 4'
 
             if level5_button.is_pressed(mouse_position, mouse_pressed):
-                self.max_enemies = 30
-                self.enemy_spawn_delay = 300
+                self.max_enemies = 60
+                self.enemy_spawn_delay = 125
                 self.selected_map = 'level5.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
@@ -489,8 +489,8 @@ class Game:
             score_text = small_font.render(f"Score: {self.kills}", True, pygame.Color('white'))
             coin_text = small_font.render(f"Coins: {self.coin_count}", True, pygame.Color('yellow'))
             crystal_text = small_font.render(f"Crystals: {self.crystal_count}", True, pygame.Color('purple'))
-            menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
-                                 pygame.Color('grey'), 'Menu', 32)
+            menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('black'),
+                                 pygame.Color('green'), 'Menu', 32)
 
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH // 2 - game_over_text.get_width() // 2, 150))
             self.display_surface.blit(score_text, (WINDOW_WIDTH // 2 - score_text.get_width() // 2, 250))
@@ -556,8 +556,8 @@ class Game:
             score_text = small_font.render(f"Score: {self.kills}", True, pygame.Color('white'))
             coin_text = small_font.render(f"Coins: {self.coin_count}", True, pygame.Color('yellow'))
             crystal_text = small_font.render(f"Crystals: {self.crystal_count}", True, pygame.Color('purple'))
-            menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('white'),
-                                 pygame.Color('grey'), 'Menu', 32)
+            menu_button = Button(WINDOW_WIDTH // 2 - 75, WINDOW_HEIGHT // 2 + 50, 150, 50, pygame.Color('black'),
+                                 pygame.Color('green'), 'Menu', 32)
 
             self.display_surface.blit(winner_text, (WINDOW_WIDTH // 2 - winner_text.get_width() // 2, 150))
             self.display_surface.blit(score_text, (WINDOW_WIDTH // 2 - score_text.get_width() // 2, 250))
@@ -612,7 +612,7 @@ class Game:
 
                 if event.type == self.dark_mode_event:
                     self.dark_mode.toggle(current_time)
-                    pygame.time.set_timer(self.dark_mode_event, random.randint(10000, 160000))
+                    pygame.time.set_timer(self.dark_mode_event, random.randint(15000, 30000))
 
             self.input()
             self.snowball_collision()
