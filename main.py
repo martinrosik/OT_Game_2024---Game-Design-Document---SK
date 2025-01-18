@@ -401,6 +401,7 @@ class Game:
 
         if time_left == 0 and self.current_hearts > 0:
             self.game_result = "win"
+            self.achievement_system.check_achievements()
             self.running = False
 
     def start_screen(self):
@@ -672,22 +673,22 @@ class Game:
             self.player_pickup_boots()
             self.player_pickup_torch()
             self.shooter_timer()
-            self.achievement_system.check_achievements()
             self.dark_mode.update(current_time)
+            self.achievement_system.check_achievements()
 
             self.display_surface.fill(self.map_color)
             self.all_sprites.draw(self.player.rect.center)
             self.all_sprites.update(delta)
 
             self.dark_mode.render(self.display_surface)
-
+            self.achievement_system.draw_notification(self.display_surface)
+            
             self.draw_hearts()
             self.draw_armor()
             self.draw_coin_count()
             self.draw_crystal_count()
             self.draw_kill_count()
             self.draw_timer()
-            self.achievement_system.draw_notification(self.display_surface)
             pygame.display.update()
 
         if self.game_result == "win":
