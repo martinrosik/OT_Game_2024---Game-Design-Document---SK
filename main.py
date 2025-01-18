@@ -478,7 +478,7 @@ class Game:
 
             if level5_button.is_pressed(mouse_position, mouse_pressed):
                 self.max_enemies = 60
-                self.enemy_spawn_delay = 125
+                self.enemy_spawn_delay = 120
                 self.selected_map = 'level5.tmx'
                 pygame.time.set_timer(self.enemy_event, self.enemy_spawn_delay)
                 mode_selected = True
